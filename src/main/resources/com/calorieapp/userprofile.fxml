@@ -1,14 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.ns.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.calorieapp.controllers.UserProfileController">
 
-</AnchorPane>
+    <!-- Top bar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 15px; -fx-background-color: #2c3e50;">
+            <Button fx:id="changeUserButton" text="← Change User" onAction="#handleChangeUser"/>
+            <Label fx:id="titleLabel" text="Current User" style="-fx-font-size: 20px; -fx-text-fill: white;"/>
+        </HBox>
+    </top>
+
+    <!-- Main content -->
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30px;">
+
+            <Label fx:id="weightLabel" text="Current Weight: -- lbs" style="-fx-font-size: 18px;"/>
+            <Label fx:id="calorieLabel" text="Recommended Calories: -- cal/day" style="-fx-font-size: 18px;"/>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="viewLogsButton" text="View Weight Logs" onAction="#handleViewLogs"/>
+                <Button fx:id="logWeightButton" text="+ Log Weight" onAction="#handleLogWeight"/>
+            </HBox>
+
+            <!-- Preview cards -->
+            <HBox spacing="20" alignment="CENTER">
+
+                <VBox fx:id="graphPreview" alignment="CENTER" spacing="10"
+                      style="-fx-background-color: #ecf0f1; -fx-padding: 20px; -fx-background-radius: 10px; -fx-cursor: hand;"
+                      prefWidth="200" prefHeight="150"
+                      onMouseClicked="#handleOpenGraph">
+                    <Label text="Weight Graph" style="-fx-font-weight: bold;"/>
+                    <Label text="(preview)" style="-fx-text-fill: gray;"/>
+                </VBox>
+
+                <VBox fx:id="streakPreview" alignment="CENTER" spacing="10"
+                      style="-fx-background-color: #ecf0f1; -fx-padding: 20px; -fx-background-radius: 10px; -fx-cursor: hand;"
+                      prefWidth="200" prefHeight="150"
+                      onMouseClicked="#handleOpenStreak">
+                    <Label text="Streak Calendar" style="-fx-font-weight: bold;"/>
+                    <Label text="(preview)" style="-fx-text-fill: gray;"/>
+                </VBox>
+
+                <VBox fx:id="progressPreview" alignment="CENTER" spacing="10"
+                      style="-fx-background-color: #ecf0f1; -fx-padding: 20px; -fx-background-radius: 10px; -fx-cursor: hand;"
+                      prefWidth="200" prefHeight="150"
+                      onMouseClicked="#handleOpenProgress">
+                    <Label text="Progress" style="-fx-font-weight: bold;"/>
+                    <Label text="(preview)" style="-fx-text-fill: gray;"/>
+                </VBox>
+
+            </HBox>
+
+        </VBox>
+    </center>
+
+</BorderPane>

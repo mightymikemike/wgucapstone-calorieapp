@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 
 public class WelcomeController {
 
-    //Stage stage = new Stage();
-
     @FXML
     private ListView<String> userListView;
 
@@ -33,8 +31,33 @@ public class WelcomeController {
                 getClass().getResource("/com/calorieapp/adduser.fxml")
         );
 
-        Scene scene = new Scene(root, 400, 600);
+        Scene scene = new Scene(root, 800, 600);
         stage.setTitle("Add New User");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void handleUserSelect() throws Exception {
+        String selectedUser = userListView.getSelectionModel().getSelectedItem();
+
+        // Ignore clicks not on user
+        if (selectedUser == null) {
+            return;
+        }
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/calorieapp/userprofile.fxml")
+        );
+        Parent root = loader.load();
+
+        // Grab controller instance for passing data
+        UserProfileController controller = loader.getController();
+        controller.setUserName(selectedUser);
+
+        Stage stage = (Stage) userListView.getScene().getWindow();
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Calorie App - " + selectedUser);
         stage.setScene(scene);
         stage.show();
     }

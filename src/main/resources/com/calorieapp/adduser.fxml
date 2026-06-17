@@ -13,7 +13,7 @@
       fx:controller="com.calorieapp.controllers.AddUserController"
       style="-fx-padding: 30px;">
 
-    <Label text="Add New User" style="-fx-font-size: 24px;"/>
+    <Label text="Add New User" style="-fx-font-size: 30px;"/>
 
     <!-- User Name -->
     <HBox spacing="10" alignment="CENTER">
@@ -67,7 +67,7 @@
     <!-- Activity Level -->
     <HBox spacing="10" alignment="CENTER">
         <Label text="Activity Level:" prefWidth="150"/>
-        <ComboBox fx:id="activityBox" prefWidth="300"/>
+        <ComboBox fx:id="activityBox" prefWidth="200"/>
     </HBox>
 
     <!-- Save/Cancel Buttons -->

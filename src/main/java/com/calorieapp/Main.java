@@ -32,11 +32,5 @@ public class Main extends Application {
         primaryStage.setTitle("Calorie App");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-    }
-
-    @FXML
-    public void handleButtonClick(Main event) {
-        System.out.println("Button Clicked!");
     }
 }

@@ -13,10 +13,10 @@
       fx:controller="com.calorieapp.controllers.WelcomeController"
       style="-fx-padding: 30px;">
 
-    <Label text="Welcome to The Calorie App!" style="-fx-font-size: 24px;"/>
+    <Label text="Welcome to The Calorie App!" style="-fx-font-size: 30px;"/>
 
     <!-- This list will be populated with users from the database -->
-    <ListView fx:id="userListView" prefWidth="300" prefHeight="200"/>
+    <ListView fx:id="userListView" prefWidth="300" prefHeight="200" onMouseClicked="#handleUserSelect"/>
 
     <Button text="Add User" fx:id="addUserButton" onAction="#handleAddUser"/>
 
