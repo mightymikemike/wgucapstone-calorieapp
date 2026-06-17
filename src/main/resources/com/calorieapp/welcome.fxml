@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox spacing="20" alignment="CENTER"
+      xmlns="http://javafx.ns.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.calorieapp.controllers.WelcomeController"
+      style="-fx-padding: 30px;">
+
+    <Label text="Welcome to The Calorie App!" style="-fx-font-size: 24px;"/>
+
+    <!-- This list will be populated with users from the database -->
+    <ListView fx:id="userListView" prefWidth="300" prefHeight="200"/>
+
+    <Button text="Add User" fx:id="addUserButton" onAction="#handleAddUser"/>
+
+</VBox>
