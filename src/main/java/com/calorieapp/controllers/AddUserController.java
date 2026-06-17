@@ -1,17 +1,21 @@
 package com.calorieapp.controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class AddUserController {
 
     @FXML private TextField nameField;
     @FXML private ComboBox<String> genderBox;
-    @FXML private TextField ageField;
+    @FXML private TextField yearField;
     @FXML private TextField feetField;
     @FXML private TextField inchesField;
     @FXML private TextField weightField;
@@ -51,7 +55,65 @@ public class AddUserController {
         errorLabel.setText("");
 
         // Validate fields are filled
+        // Adjust for specific error
+        if (nameField.getText().isEmpty() ||
+                genderBox.getValue() == null ||
+                yearField.getText().isEmpty() ||
+                feetField.getText().isEmpty() ||
+                inchesField.getText().isEmpty() ||
+                weightField.getText().isEmpty() ||
+                goalWeightField.getText().isEmpty() ||
+                goalBox.getValue() == null ||
+                rateBox.getValue() == null ||
+                activityBox.getValue() == null) {
 
+            errorLabel.setText("Please fill out all fields.");
+            return;
+        }
+
+        // Validate numeric fields
+        try {
+            int age = Integer.parseInt(yearField.getText());
+            int feet = Integer.parseInt(feetField.getText());
+            int inches = Integer.parseInt(inchesField.getText());
+            double weight = Double.parseDouble(weightField.getText());
+            double goalWeight = Double.parseDouble(goalWeightField.getText());
+
+            // Convert height to inches
+            int totalInches = (feet * 12) + inches;
+
+            // Save to database
+            // Adjust later
+            System.out.println("User: " + nameField.getText());
+            System.out.println("Height: " + totalInches + " inches");
+            System.out.println("Weight: " + weight + " lbs");
+            System.out.println("Goal: " + goalWeight + "lbs");
+
+            // Return to welcome screen
+            goToWelcome();
+
+        } catch (NumberFormatException e) {
+            errorLabel.setText("Age, height, and weight must be numbers.");
+        }
+    }
+
+    @FXML
+    public void handleCancel() throws Exception {
+        goToWelcome();
+    }
+
+    private void goToWelcome() throws RuntimeException {
+        try {
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/com/calorieapp/welcome.fxml")
+            );
+            Stage stage = (Stage) cancelButton.getScene().getWindow();
+            stage.setTitle("Calorie App");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
