@@ -11,6 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.time.Year;
+
 public class AddUserController {
 
     @FXML private TextField nameField;
@@ -73,7 +75,8 @@ public class AddUserController {
 
         // Validate numeric fields
         try {
-            int age = Integer.parseInt(yearField.getText());
+            int year = Integer.parseInt(yearField.getText());
+            int age = getAge(year);
             int feet = Integer.parseInt(feetField.getText());
             int inches = Integer.parseInt(inchesField.getText());
             double weight = Double.parseDouble(weightField.getText());
@@ -85,6 +88,7 @@ public class AddUserController {
             // Save to database
             // Adjust later
             System.out.println("User: " + nameField.getText());
+            System.out.println("Age: " + age);
             System.out.println("Height: " + totalInches + " inches");
             System.out.println("Weight: " + weight + " lbs");
             System.out.println("Goal: " + goalWeight + "lbs");
@@ -95,6 +99,11 @@ public class AddUserController {
         } catch (NumberFormatException e) {
             errorLabel.setText("Age, height, and weight must be numbers.");
         }
+    }
+
+    public int getAge(int year) {
+        int currentYear = Year.now().getValue();
+        return currentYear - year;
     }
 
     @FXML
