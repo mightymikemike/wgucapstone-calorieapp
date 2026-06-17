@@ -1,5 +1,6 @@
 package com.calorieapp;
 
+import com.calorieapp.database.DatabaseManager;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,6 +26,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        DatabaseManager.initializeDatabase();
+
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/com/calorieapp/welcome.fxml")
         );

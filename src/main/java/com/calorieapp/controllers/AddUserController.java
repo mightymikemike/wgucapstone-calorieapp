@@ -1,5 +1,6 @@
 package com.calorieapp.controllers;
 
+import com.calorieapp.database.DatabaseManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -86,12 +87,25 @@ public class AddUserController {
             int totalInches = (feet * 12) + inches;
 
             // Save to database
-            // Adjust later
+            /*
             System.out.println("User: " + nameField.getText());
             System.out.println("Age: " + age);
             System.out.println("Height: " + totalInches + " inches");
             System.out.println("Weight: " + weight + " lbs");
             System.out.println("Goal: " + goalWeight + "lbs");
+             */
+            DatabaseManager.addUser(
+                    nameField.getText(),
+                    genderBox.getValue(),
+                    year,
+                    totalInches,
+                    activityBox.getValue(),
+                    goalBox.getValue(),
+                    goalWeight,
+                    Double.parseDouble(rateBox.getValue().replaceAll("[^0-9.]", ""))
+            );
+
+            System.out.println("User " + nameField.getText() + " added successfully!");
 
             // Return to welcome screen
             goToWelcome();

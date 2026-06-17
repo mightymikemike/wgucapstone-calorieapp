@@ -1,6 +1,103 @@
 package com.calorieapp.database;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseManager {
 
-    private static final String DB_URL = "jdbc:sqlite:calorieapp.db";
+    // Create Tables \\
+    public static void initializeDatabase() {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String createUsersTable = "CREATE TABLE IF NOT EXISTS users (\n"
+                + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                + " name TEXT NOT NULL,\n"
+                + " gender TEXT NOT NULL,\n"
+                + " birth_year INTEGER NOT NULL,\n"
+                + " height_inches INTEGER NOT NULL,\n"
+                + " activity_level TEXT NOT NULL,\n"
+                + " goal_type TEXT NOT NULL,\n"
+                + " goal_weight REAL NOT NULL,\n"
+                + " weekly_rate REAL NOT NULL\n"
+                + ");";
+
+        String createWeightLogs =  "CREATE TABLE IF NOT EXISTS weight_logs (\n"
+                + " id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                + " user_id INTEGER NOT NULL,\n"
+                + " weight REAL NOT NULL,\n"
+                + " log_date TEXT NOT NULL,\n"
+                + " FOREIGN KEY (user_id) REFERENCES users(id)\n"
+                + ");";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             java.sql.Statement stmt = conn.createStatement()) {
+            stmt.execute(createUsersTable);
+            System.out.println("Users Table Created.");
+            stmt.execute(createWeightLogs);
+            System.out.println("Weight Log Table created");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // DELETE AFTER TESTING
+    private static void connect() {
+        String url = "jdbc:sqlite:calorieapp.db";
+
+        try (Connection conn = DriverManager.getConnection(url)) {
+            if (conn != null) {
+                System.out.println("Connected to the database");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // User Methods \\
+    public static void addUser(String name, String gender, int birthYear, int heightInches,
+                               String activityLevel, String goalType, double goalWeight, double weeklyRate) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "INSERT INTO users (name, gender, birth_year, height_inches, activity_level, goal_type, goal_weight, weekly_rate) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             java.sql.PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, gender);
+            pstmt.setInt(3, birthYear);
+            pstmt.setInt(4, heightInches);
+            pstmt.setString(5, activityLevel);
+            pstmt.setString(6, goalType);
+            pstmt.setDouble(7, goalWeight);
+            pstmt.setDouble(8, weeklyRate);
+
+            pstmt.executeUpdate();
+            System.out.println("User Added: " + name);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public static List<String> getAllUserNames() {
+        List<String> names = new ArrayList<>();
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT name FROM users";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                names.add(rs.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return names;
+    }
+
+    // Weight Logs \\
+
 }
