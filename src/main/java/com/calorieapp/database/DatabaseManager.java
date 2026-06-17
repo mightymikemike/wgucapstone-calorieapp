@@ -98,6 +98,50 @@ public class DatabaseManager {
         return names;
     }
 
+    // Display most recent weight in user dashboard
+    public static double getRecentWeight(int userId) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT weight FROM weight_logs WHERE user_id = ? ORDER BY log_date DESC LIMIT 1";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("weight");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return -1;
+    }
+
+    public static int getUserIdByName(String name) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT id FROM users WHERE name = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+
+        return -1;
+    }
+
     // Weight Logs \\
 
 }

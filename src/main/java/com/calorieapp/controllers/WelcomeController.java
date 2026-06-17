@@ -1,5 +1,6 @@
 package com.calorieapp.controllers;
 
+import com.calorieapp.database.DatabaseManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+
+import java.util.List;
 
 public class WelcomeController {
 
@@ -18,8 +21,9 @@ public class WelcomeController {
 
     @FXML
     public void initialize() {
-        //placeholder
-        userListView.getItems().addAll("User 1", "User 2", "User 3");
+        // Lists actual users names from db
+        List<String> userNames = DatabaseManager.getAllUserNames();
+        userListView.getItems().addAll(userNames);
     }
 
     @FXML

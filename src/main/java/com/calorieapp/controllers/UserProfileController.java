@@ -1,5 +1,6 @@
 package com.calorieapp.controllers;
 
+import com.calorieapp.database.DatabaseManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.sql.*;
+import java.util.List;
+
 public class UserProfileController {
 
     @FXML private Label titleLabel;
@@ -15,25 +19,36 @@ public class UserProfileController {
     @FXML private Label calorieLabel;
     @FXML private Button changeUserButton;
 
-     // Placeholder
-    private String currentUserName = "Mike";
-    private double currentWeight = 288.8;
-    private int recommendedCalories = 2500;
+    private String currentUserName = "User";
+    private double currentWeight = -1;
+    private int recommendedCalories = 2500; // Still a placeholder
 
     @FXML
     public void initialize() {
+        //List<String> userNames = DatabaseManager.getAllUserNames();
+        //userListView.getItems().addAll(userNames);
         updateLabels();
     }
 
     public void setUserName(String name) {
         this.currentUserName = name;
+
+        int userId = DatabaseManager.getUserIdByName(name);
+        this.currentWeight = DatabaseManager.getRecentWeight(userId);
+        // Add Calorie Recommendation
         updateLabels();
     }
 
     @FXML
     public void updateLabels() {
         titleLabel.setText("Current User - " + currentUserName);
-        weightLabel.setText("Current Weight: " + currentWeight + " lbs");
+
+        if (currentWeight == -1) {
+            weightLabel.setText("Current Weight: No weight has been logged yet");
+        } else {
+            weightLabel.setText("Current Weight: " + currentWeight + " lbs");
+        }
+
         calorieLabel.setText("Recommended Calories: " + recommendedCalories + " cal/day");
     }
 
