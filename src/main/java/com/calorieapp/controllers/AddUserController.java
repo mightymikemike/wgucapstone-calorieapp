@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import javax.xml.crypto.Data;
 import java.time.Year;
 
 public class AddUserController {
@@ -86,14 +87,6 @@ public class AddUserController {
             // Convert height to inches
             int totalInches = (feet * 12) + inches;
 
-            // Save to database
-            /*
-            System.out.println("User: " + nameField.getText());
-            System.out.println("Age: " + age);
-            System.out.println("Height: " + totalInches + " inches");
-            System.out.println("Weight: " + weight + " lbs");
-            System.out.println("Goal: " + goalWeight + "lbs");
-             */
             DatabaseManager.addUser(
                     nameField.getText(),
                     genderBox.getValue(),
@@ -104,6 +97,13 @@ public class AddUserController {
                     goalWeight,
                     Double.parseDouble(rateBox.getValue().replaceAll("[^0-9.]", ""))
             );
+
+            // Get id of user just added
+            int userId = DatabaseManager.getUserIdByName(nameField.getText());
+
+            //Log starting weight as first entry
+            String today = java.time.LocalDate.now().toString();
+            DatabaseManager.addWeightLog(userId, weight, today);
 
             System.out.println("User " + nameField.getText() + " added successfully!");
 

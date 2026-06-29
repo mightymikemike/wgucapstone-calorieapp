@@ -58,6 +58,16 @@ public class UserProfileController {
     }
 
     @FXML
+    public void handleEditUser() {
+    //REVISIT
+    }
+
+    @FXML
+    public void handleDeleteUser() {
+    //REVISIT
+    }
+
+    @FXML
     public void handleViewLogs() {
         navigateTo("/com/calorieapp/weightlog.fxml", "Weight Logs", 800, 600);
     }

@@ -1,5 +1,9 @@
 package com.calorieapp.database;
 
+import com.calorieapp.models.WeightLog;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,5 +147,84 @@ public class DatabaseManager {
     }
 
     // Weight Logs \\
+    public static void addWeightLog(int userId, double weight, String date) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
 
+        if (hasLogForDate(userId, date)) {
+            String updateSql = "UPDATE weight_logs SET weight = ? WHERE user_id = ? AND log_date = ?";
+
+            try (Connection conn = DriverManager.getConnection(DB_URL);
+                 PreparedStatement pstmt = conn.prepareStatement(updateSql)) {
+
+                pstmt.setDouble(1, weight);
+                pstmt.setInt(2, userId);
+                pstmt.setString(3, date);
+                pstmt.executeUpdate();
+
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+
+        } else {
+            String insertSql = "INSERT INTO weight_logs (user_id, weight, log_date) VALUES (?, ?, ?)";
+
+            try (Connection conn = DriverManager.getConnection(DB_URL);
+                 PreparedStatement pstmt = conn.prepareStatement(insertSql)) {
+
+                pstmt.setInt(1, userId);
+                pstmt.setDouble(2, weight);
+                pstmt.setString(3, date);
+                pstmt.executeUpdate();
+
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    // Checks if log already exists for user on date
+    public static boolean hasLogForDate(int userId, String date) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT id FROM weight_logs WHERE user_id = ? AND log_date = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, date);
+            ResultSet rs = pstmt.executeQuery();
+
+            return rs.next(); // true if a row was found
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    /*
+    public ObservableList<WeightLog> getWeightLog() {
+        ObservableList<WeightLog> weightLogs = FXCollections.observableArrayList();
+        weightLogs.add(new WeightLog());
+        return weightLogs;
+    }*/
+
+    public static List<String> getWeightLog() {
+        List<String> weightLog = new ArrayList<>();
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT name FROM users";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                weightLog.add(rs.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return weightLog;
+    }
 }
