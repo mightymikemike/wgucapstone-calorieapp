@@ -24,8 +24,6 @@
     <center>
         <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30px;">
 
-            <Label fx:id="weightLabel" text="Current Weight: -- lbs" style="-fx-font-size: 18px;"/>
-
             <!-- Add Weight Loss rate and maybe goal -->
             <Label fx:id="calorieLabel" text="Recommended Calories: -- cal/day" style="-fx-font-size: 18px;"/>
 

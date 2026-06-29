@@ -2,8 +2,6 @@ package com.calorieapp.database;
 
 import com.calorieapp.models.UserProfile;
 
-import javax.xml.crypto.Data;
-
 public class TDEECalculator {
 
     public static double calculateDailyCalories(UserProfile user) {
@@ -44,15 +42,15 @@ public class TDEECalculator {
         double tdee = bmr * multiplier;
         double calories;
 
+        // 3500 calories a week (equal to losing/gaining about 1lb per week) / 7 days a week = 500
         if (goalType.contains("Lose")) {
-            calories = tdee - weeklyRate;
+            calories = tdee - weeklyRate * 500.0;
         } else if (goalType.contains("Gain")) {
-            calories = tdee + weeklyRate;
+            calories = tdee + weeklyRate * 500.0;
         } else {
             calories = tdee;
         }
 
-        // placeholder
         return calories;
     }
 }

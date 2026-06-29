@@ -2,6 +2,8 @@ package com.calorieapp.controllers;
 
 import com.calorieapp.database.DatabaseManager;
 import com.calorieapp.controllers.LogWeightController;
+import com.calorieapp.database.TDEECalculator;
+import com.calorieapp.models.UserProfile;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,17 +29,15 @@ public class UserProfileController {
 
     @FXML
     public void initialize() {
-        //List<String> userNames = DatabaseManager.getAllUserNames();
-        //userListView.getItems().addAll(userNames);
         updateLabels();
     }
 
     public void setUserName(String name) {
         this.currentUserName = name;
-
         int userId = DatabaseManager.getUserIdByName(name);
         this.currentWeight = DatabaseManager.getRecentWeight(userId);
-        // Add Calorie Recommendation
+        UserProfile profile = DatabaseManager.getUserProfile(userId);
+        this.recommendedCalories = (int) TDEECalculator.calculateDailyCalories(profile);
         updateLabels();
     }
 

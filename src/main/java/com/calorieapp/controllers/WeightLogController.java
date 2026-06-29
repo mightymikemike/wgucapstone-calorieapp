@@ -43,6 +43,8 @@ public class WeightLogController {
     public void setCurrentUserName (String name) {
         this.currentUserName = name;
         this.currentUserId = DatabaseManager.getUserIdByName(name);
+        // ADd calorie recommendation change
+
         loadWeightLogs();
         updateLabels();
     }
