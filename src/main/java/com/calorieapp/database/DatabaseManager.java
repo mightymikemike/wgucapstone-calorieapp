@@ -203,13 +203,6 @@ public class DatabaseManager {
         }
     }
 
-    /*
-    public ObservableList<WeightLog> getWeightLog() {
-        ObservableList<WeightLog> weightLogs = FXCollections.observableArrayList();
-        weightLogs.add(new WeightLog());
-        return weightLogs;
-    }*/
-
     public static List<WeightLog> getWeightLogsForUser(int userId) {
         List<WeightLog> logs = new ArrayList<>();
         String DB_URL = "jdbc:sqlite:calorieapp.db";
