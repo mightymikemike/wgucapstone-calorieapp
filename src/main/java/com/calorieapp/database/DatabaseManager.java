@@ -209,22 +209,27 @@ public class DatabaseManager {
         return weightLogs;
     }*/
 
-    public static List<String> getWeightLog() {
-        List<String> weightLog = new ArrayList<>();
+    public static List<WeightLog> getWeightLogsForUser(int userId) {
+        List<WeightLog> logs = new ArrayList<>();
         String DB_URL = "jdbc:sqlite:calorieapp.db";
-        String sql = "SELECT name FROM users";
+        String sql = "SELECT weight, log_date FROM weight_logs WHERE user_id = ? ORDER BY log_date DESC";
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                weightLog.add(rs.getString("name"));
+                double weight = rs.getDouble("weight");
+                String date = rs.getString("log_date");
+                logs.add(new WeightLog(weight, date));
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return weightLog;
+
+        return logs;
     }
 }

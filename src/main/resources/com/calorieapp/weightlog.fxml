@@ -6,9 +6,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.ns.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="com.calorieapp.controllers.WeightLogController">
 
-</AnchorPane>
+    <!-- Top bar -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 15px; -fx-background-color: #2c3e50;">
+
+            <!--Add return button -->
+            <Button fx:id="returnToProfileButton" text="← Return to User Profile" onAction="#handleReturnToProfile"/>
+            <Label fx:id="titleLabel" text="Current User" style="-fx-font-size: 20px; -fx-text-fill: white;"/>
+        </HBox>
+    </top>
+
+    <!-- Main content -->
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 30px;">
+
+            <Label fx:id="weightLabel" text="Current Weight: -- lbs" style="-fx-font-size: 18px;"/>
+
+            <!-- Add Weight Loss rate and maybe goal -->
+            <Label fx:id="calorieLabel" text="Recommended Calories: -- cal/day" style="-fx-font-size: 18px;"/>
+
+            <HBox spacing="15" alignment="CENTER">
+                <Button fx:id="logWeightButton" text="+ Log Weight" onAction="#handleLogWeight"/>
+            </HBox>
+
+            <ListView fx:id="weightLogView" prefWidth="300" prefHeight="200"/>
+
+        </VBox>
+    </center>
+
+</BorderPane>

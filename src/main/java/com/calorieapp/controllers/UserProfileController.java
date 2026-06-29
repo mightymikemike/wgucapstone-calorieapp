@@ -69,7 +69,19 @@ public class UserProfileController {
 
     @FXML
     public void handleViewLogs() {
-        navigateTo("/com/calorieapp/weightlog.fxml", "Weight Logs", 800, 600);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/weightlog.fxml"));
+            Parent root = loader.load();
+            WeightLogController controller = loader.getController();
+            controller.setCurrentUserName(currentUserName);
+
+            Stage stage = (Stage) changeUserButton.getScene().getWindow();
+            stage.setTitle(currentUserName + "'s Weight Log");
+            stage.setScene(new Scene(root, 800, 650));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
