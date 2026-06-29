@@ -1,5 +1,6 @@
 package com.calorieapp.database;
 
+import com.calorieapp.models.UserProfile;
 import com.calorieapp.models.WeightLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -231,5 +232,35 @@ public class DatabaseManager {
         }
 
         return logs;
+    }
+
+    public static UserProfile getUserProfile(int userId) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT * FROM users WHERE id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new UserProfile(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("gender"),
+                        rs.getInt("birth_year"),
+                        rs.getInt("height_inches"),
+                        rs.getString("activity_level"),
+                        rs.getString("goal_type"),
+                        rs.getDouble("goal_weight"),
+                        rs.getDouble("weekly_rate")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null; // no user found with id
     }
 }
