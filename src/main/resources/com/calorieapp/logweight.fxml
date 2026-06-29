@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox spacing="15" alignment="CENTER"
+      xmlns="http://javafx.ns.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.calorieapp.controllers.LogWeightController"
+      style="-fx-padding: 20px;">
 
-</AnchorPane>
+    <Label text="Log Weight" style="-fx-font-size: 20px;"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Date:" prefWidth="80"/>
+        <DatePicker fx:id="datePicker" prefWidth="200"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Weight (lbs):" prefWidth="80"/>
+        <TextField fx:id="weightField" promptText="Enter weight" prefWidth="200"/>
+    </HBox>
+
+    <Button text="Save" fx:id="saveButton" onAction="#handleSave"/>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: red;" text=""/>
+
+</VBox>

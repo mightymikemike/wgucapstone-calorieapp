@@ -2,6 +2,7 @@ package com.calorieapp.controllers;
 
 import com.calorieapp.database.DatabaseManager;
 import com.calorieapp.models.WeightLog;
+import com.calorieapp.controllers.LogWeightController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -54,8 +55,19 @@ public class WeightLogController {
 
     @FXML
     public void handleLogWeight() {
-        // Placeholder
-        System.out.println("Log Weight Clicked - Screen Unavailable");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/logweight.fxml"));
+            Parent root = loader.load();
+            LogWeightController controller = loader.getController();
+            controller.setUserName(currentUserName);
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Log Weight");
+            popupStage.setScene(new Scene(root, 300, 200));
+            popupStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -86,4 +98,7 @@ public class WeightLogController {
             e.printStackTrace();
         }
     }
+
+    // Add refresh button since youhave to back out to user profile before weight populates on weight log screen
+
 }

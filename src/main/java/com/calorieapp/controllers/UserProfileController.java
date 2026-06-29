@@ -1,6 +1,7 @@
 package com.calorieapp.controllers;
 
 import com.calorieapp.database.DatabaseManager;
+import com.calorieapp.controllers.LogWeightController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,7 @@ public class UserProfileController {
     @FXML private Label weightLabel;
     @FXML private Label calorieLabel;
     @FXML private Button changeUserButton;
+    @FXML private Button logWeightButton;
 
     private String currentUserName = "User";
     private double currentWeight = -1;
@@ -86,8 +88,19 @@ public class UserProfileController {
 
     @FXML
     public void handleLogWeight() {
-        // Placeholder
-        System.out.println("Log Weight Clicked - Screen Unavailable");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/logweight.fxml"));
+            Parent root = loader.load();
+            LogWeightController controller = loader.getController();
+            controller.setUserName(currentUserName);
+
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Log Weight");
+            popupStage.setScene(new Scene(root, 300, 200));
+            popupStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -1,7 +1,8 @@
-com\calorieapp\controllers\WeightLogController.class
-com\calorieapp\Main.class
 com\calorieapp\controllers\WelcomeController.class
 com\calorieapp\models\UserProfile.class
-com\calorieapp\controllers\UserProfileController.class
 com\calorieapp\models\WeightLog.class
 com\calorieapp\controllers\AddUserController.class
+com\calorieapp\controllers\WeightLogController.class
+com\calorieapp\Main.class
+com\calorieapp\controllers\LogWeightController.class
+com\calorieapp\controllers\UserProfileController.class
