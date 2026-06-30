@@ -1,6 +1,8 @@
 package com.calorieapp.controllers;
 
 import com.calorieapp.database.DatabaseManager;
+import com.calorieapp.database.TDEECalculator;
+import com.calorieapp.models.UserProfile;
 import com.calorieapp.models.WeightLog;
 import com.calorieapp.controllers.LogWeightController;
 import javafx.fxml.FXML;
@@ -23,13 +25,25 @@ public class WeightLogController {
     @FXML private Button returnToProfileButton;
     @FXML private Button logWeightButton;
 
-    private String currentUserName;
+    private String currentUserName = "User";
     private int currentUserId;
     private double currentWeight;
     private int recommendedCalories = 2500; // Still a placeholder
 
     @FXML
     public void initialize() {
+        //updateLabels();
+    }
+
+    @FXML
+    public void setUserName (String name) {
+        this.currentUserName = name;
+        this.currentUserId = DatabaseManager.getUserIdByName(name);
+        int userId = DatabaseManager.getUserIdByName(name);
+        this.currentWeight = DatabaseManager.getRecentWeight(userId);
+        UserProfile profile = DatabaseManager.getUserProfile(userId);
+        this.recommendedCalories = (int) TDEECalculator.calculateDailyCalories(profile);
+        loadWeightLogs();
         updateLabels();
     }
 
@@ -40,14 +54,6 @@ public class WeightLogController {
         calorieLabel.setText("Recommended Calories: " + recommendedCalories + " cal/day");
     }
 
-    public void setCurrentUserName (String name) {
-        this.currentUserName = name;
-        this.currentUserId = DatabaseManager.getUserIdByName(name);
-        // ADd calorie recommendation change
-
-        loadWeightLogs();
-        updateLabels();
-    }
 
     private void loadWeightLogs() {
         weightLogView.getItems().clear();

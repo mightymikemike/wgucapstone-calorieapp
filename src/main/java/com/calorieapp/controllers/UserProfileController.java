@@ -2,8 +2,10 @@ package com.calorieapp.controllers;
 
 import com.calorieapp.database.DatabaseManager;
 import com.calorieapp.controllers.LogWeightController;
+import com.calorieapp.database.LinearRegression;
 import com.calorieapp.database.TDEECalculator;
 import com.calorieapp.models.UserProfile;
+import com.calorieapp.models.WeightLog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,7 +39,20 @@ public class UserProfileController {
         int userId = DatabaseManager.getUserIdByName(name);
         this.currentWeight = DatabaseManager.getRecentWeight(userId);
         UserProfile profile = DatabaseManager.getUserProfile(userId);
-        this.recommendedCalories = (int) TDEECalculator.calculateDailyCalories(profile);
+
+        // Base recommendation
+        double baseRec = TDEECalculator.calculateDailyCalories(profile);
+
+        // Get weight history for regression model
+        List<WeightLog> logs = DatabaseManager.getWeightLogsForUser(userId);
+
+        // Create regression model
+        LinearRegression regression = new LinearRegression();
+        regression.calc(logs);
+        double adjustedCals = regression.adjustCalories(baseRec, profile.getWeeklyRate());
+
+        this.recommendedCalories = (int) adjustedCals;
+
         updateLabels();
     }
 
@@ -75,7 +90,7 @@ public class UserProfileController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/weightlog.fxml"));
             Parent root = loader.load();
             WeightLogController controller = loader.getController();
-            controller.setCurrentUserName(currentUserName);
+            controller.setUserName(currentUserName);
 
             Stage stage = (Stage) changeUserButton.getScene().getWindow();
             stage.setTitle(currentUserName + "'s Weight Log");
