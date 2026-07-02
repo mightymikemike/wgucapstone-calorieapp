@@ -127,7 +127,7 @@ public class UserProfileController {
             controller.setCurrentUserName(currentUserName);
 
             Stage stage = (Stage) changeUserButton.getScene().getWindow();
-            stage.setTitle(currentUserName + "'s Weight Graph");
+            stage.setTitle("Calorie App - " + currentUserName);
             stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (Exception e) {
@@ -137,8 +137,19 @@ public class UserProfileController {
 
     @FXML
     public void handleOpenStreak() {
-        // Placeholder
-        System.out.println("Streak Calendar Clicked - Screen Unavailable");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/streak.fxml"));
+            Parent root = loader.load();
+            StreakController controller = loader.getController();
+            controller.setCurrentUserName(currentUserName);
+
+            Stage stage = (Stage) changeUserButton.getScene().getWindow();
+            stage.setTitle("Calorie App - " + currentUserName);
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

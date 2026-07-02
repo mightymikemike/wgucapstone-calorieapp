@@ -297,4 +297,49 @@ public class DatabaseManager {
             System.out.println(e.getMessage());
         }
     }
+
+    /*
+    // Find first day logged to emit previous dates from streak calendar
+    public static String getFirstLoggedDate(int userId) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT MIN(log_date) as first_date FROM weight_logs WHERE user_id = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("first_date");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+     */
+
+    public static List<String> getLoggedDatesForMonth(int userId, int year, int month) {
+        List<String> dates = new ArrayList<>();
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+
+        String prefix = String.format("%d-%02d", year, month);
+        String sql = "SELECT log_date FROM weight_logs WHERE user_id = ? AND log_date LIKE ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, prefix + "%");
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                dates.add(rs.getString("log_date"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return dates;
+    }
 }
