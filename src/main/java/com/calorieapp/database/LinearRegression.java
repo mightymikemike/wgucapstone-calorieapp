@@ -43,19 +43,51 @@ public class LinearRegression {
     }
 
     // Adjust recommendation based on current recommendation + users goal
-    public double adjustCalories(double currentCalories, double weeklyRateGoal) {
+    public double adjustCalories(double currentCalories, double weeklyRateGoal, String goalType) {
 
         // m = lbs/day, multiplies by 7 to get lbs/week
         double actualWeeklyRate = m * 7;
+        double adjustedCalories;
+        double calorieAdjustment;
+        double gap;
 
         // Checks gap between actual weight change and user goal
         // Positive gap = loss/gain too slow
         // Negative gap = loss/gain too fast
-        double gap = weeklyRateGoal - Math.abs(actualWeeklyRate); //
 
-        // Convert lbs/week gap to cal/day adjustment (3500/7)
-        double calorieAdjustment = gap * 500;
-        double adjustedCalories = currentCalories - calorieAdjustment;
+
+        // Add a loop to check gap for goal
+        // Keeping gap mutliplier at 100 instead of 500 to avoid drastic adjustments
+        if (goalType.contains("Maintain")) {
+            adjustedCalories = currentCalories;
+            return adjustedCalories;
+        } else if (goalType.contains("Lose")) {
+            gap = weeklyRateGoal - Math.abs(actualWeeklyRate);
+            calorieAdjustment = gap * 100;
+
+            // Need a cap on adjustments to avoid drastic changes in recommendations
+            if (calorieAdjustment > 300) {
+                calorieAdjustment = 300;
+            }
+            if (calorieAdjustment < -300) {
+                calorieAdjustment = -300;
+            }
+
+            adjustedCalories = currentCalories - calorieAdjustment;
+
+        } else {
+            gap = weeklyRateGoal - actualWeeklyRate;
+            calorieAdjustment = gap * 100;
+
+            if (calorieAdjustment > 300) {
+                calorieAdjustment = 300;
+            }
+            if (calorieAdjustment < -300) {
+                calorieAdjustment = -300;
+            }
+
+            adjustedCalories = currentCalories + calorieAdjustment;
+        }
 
         // Min calories
         if (adjustedCalories < 1200) {

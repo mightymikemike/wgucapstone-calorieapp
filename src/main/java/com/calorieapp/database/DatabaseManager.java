@@ -227,6 +227,30 @@ public class DatabaseManager {
         return logs;
     }
 
+    public static List<WeightLog> getWeightLogsAscending(int userId) {
+        List<WeightLog> logs = new ArrayList<>();
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "SELECT weight, log_date FROM weight_logs WHERE user_id = ? ORDER BY log_date ASC";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                double weight = rs.getDouble("weight");
+                String date = rs.getString("log_date");
+                logs.add(new WeightLog(weight, date));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return logs;
+    }
+
     public static UserProfile getUserProfile(int userId) {
         String DB_URL = "jdbc:sqlite:calorieapp.db";
         String sql = "SELECT * FROM users WHERE id = ?";
@@ -255,5 +279,22 @@ public class DatabaseManager {
         }
 
         return null; // no user found with id
+    }
+
+    // Delete button for weight logs - may remove
+    public static void deleteWeightLog(int userId, String date) {
+        String DB_URL = "jdbc:sqlite:calorieapp.db";
+        String sql = "DELETE FROM weight_logs WHERE user_id = ? AND log_date = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, date);
+            pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

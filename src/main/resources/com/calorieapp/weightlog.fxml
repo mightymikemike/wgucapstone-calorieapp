@@ -35,6 +35,9 @@
 
             <ListView fx:id="weightLogView" prefWidth="300" prefHeight="200"/>
 
+            <!-- Delete Button - May remove -->
+            <Button text="Delete Selected" onAction="#handleDeleteLog"/>
+
         </VBox>
     </center>
 

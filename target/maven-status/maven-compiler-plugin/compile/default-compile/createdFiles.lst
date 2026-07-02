@@ -1,5 +1,6 @@
 com\calorieapp\controllers\WelcomeController.class
 com\calorieapp\models\UserProfile.class
+com\calorieapp\database\LinearRegression.class
 com\calorieapp\models\WeightLog.class
 com\calorieapp\controllers\AddUserController.class
 com\calorieapp\controllers\WeightLogController.class

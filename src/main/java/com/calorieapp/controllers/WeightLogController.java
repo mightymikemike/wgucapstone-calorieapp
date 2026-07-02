@@ -1,6 +1,7 @@
 package com.calorieapp.controllers;
 
 import com.calorieapp.database.DatabaseManager;
+import com.calorieapp.database.LinearRegression;
 import com.calorieapp.database.TDEECalculator;
 import com.calorieapp.models.UserProfile;
 import com.calorieapp.models.WeightLog;
@@ -39,10 +40,18 @@ public class WeightLogController {
     public void setUserName (String name) {
         this.currentUserName = name;
         this.currentUserId = DatabaseManager.getUserIdByName(name);
-        int userId = DatabaseManager.getUserIdByName(name);
-        this.currentWeight = DatabaseManager.getRecentWeight(userId);
-        UserProfile profile = DatabaseManager.getUserProfile(userId);
-        this.recommendedCalories = (int) TDEECalculator.calculateDailyCalories(profile);
+        this.currentWeight = DatabaseManager.getRecentWeight(currentUserId);
+
+        UserProfile profile = DatabaseManager.getUserProfile(currentUserId);
+        double baseCals = TDEECalculator.calculateDailyCalories(profile);
+
+        List<WeightLog> logs = DatabaseManager.getWeightLogsAscending(currentUserId);
+        LinearRegression regression = new LinearRegression();
+        regression.calc(logs);
+        double adjustedCals = regression.adjustCalories(baseCals, profile.getWeeklyRate(), profile.getGoalType());
+
+        this.recommendedCalories = (int) adjustedCals;
+
         loadWeightLogs();
         updateLabels();
     }
@@ -76,6 +85,7 @@ public class WeightLogController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @FXML
@@ -87,12 +97,24 @@ public class WeightLogController {
             controller.setUserName(currentUserName);
 
             Stage stage = (Stage) returnToProfileButton.getScene().getWindow();
-            stage.setTitle("Current User - " + currentUserName);
-            stage.setScene(new Scene(root, 800, 650));
+            stage.setTitle("Calorie App - " + currentUserName);
+            stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    public void handleDeleteLog() {
+        WeightLog selected = weightLogView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            return;
+        }
+
+        DatabaseManager.deleteWeightLog(currentUserId, selected.getDate());
+        loadWeightLogs(); // Refresh list after delete
     }
 
     private void navigateTo(String fxmlPath, String title, int width, int height) {

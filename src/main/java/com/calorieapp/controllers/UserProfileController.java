@@ -44,12 +44,12 @@ public class UserProfileController {
         double baseRec = TDEECalculator.calculateDailyCalories(profile);
 
         // Get weight history for regression model
-        List<WeightLog> logs = DatabaseManager.getWeightLogsForUser(userId);
+        List<WeightLog> logs = DatabaseManager.getWeightLogsAscending(userId);
 
         // Create regression model
         LinearRegression regression = new LinearRegression();
         regression.calc(logs);
-        double adjustedCals = regression.adjustCalories(baseRec, profile.getWeeklyRate());
+        double adjustedCals = regression.adjustCalories(baseRec, profile.getWeeklyRate(), profile.getGoalType());
 
         this.recommendedCalories = (int) adjustedCals;
 
@@ -58,7 +58,7 @@ public class UserProfileController {
 
     @FXML
     public void updateLabels() {
-        titleLabel.setText("Current User - " + currentUserName);
+        titleLabel.setText(currentUserName + "'s User Profile");
 
         if (currentWeight == -1) {
             weightLabel.setText("Current Weight: No weight has been logged yet");
@@ -93,8 +93,8 @@ public class UserProfileController {
             controller.setUserName(currentUserName);
 
             Stage stage = (Stage) changeUserButton.getScene().getWindow();
-            stage.setTitle(currentUserName + "'s Weight Log");
-            stage.setScene(new Scene(root, 800, 650));
+            stage.setTitle("Calorie App - " + currentUserName);
+            stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
