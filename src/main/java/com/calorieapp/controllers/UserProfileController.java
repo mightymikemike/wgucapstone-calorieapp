@@ -120,8 +120,19 @@ public class UserProfileController {
 
     @FXML
     public void handleOpenGraph() {
-        // Placeholder
-        System.out.println("Weight Graph Clicked - Screen Unavailable");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/linechart.fxml"));
+            Parent root = loader.load();
+            LineChartController controller = loader.getController();
+            controller.setCurrentUserName(currentUserName);
+
+            Stage stage = (Stage) changeUserButton.getScene().getWindow();
+            stage.setTitle(currentUserName + "'s Weight Graph");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

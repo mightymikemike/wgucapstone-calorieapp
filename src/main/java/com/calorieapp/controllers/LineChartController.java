@@ -3,10 +3,14 @@ package com.calorieapp.controllers;
 import com.calorieapp.database.DatabaseManager;
 import com.calorieapp.models.WeightLog;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.util.List;
 
@@ -36,8 +40,24 @@ public class LineChartController {
         for (WeightLog log : logs) {
             series.getData().add(new XYChart.Data<>(log.getDate(), log.getWeight()));
         }
-
         weightChart.getData().add(series);
+    }
+
+    @FXML
+    public void handleBack() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/userprofile.fxml"));
+            Parent root = loader.load();
+            UserProfileController controller = loader.getController();
+            controller.setUserName(currentUserName);
+
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            stage.setTitle("Calorie App - " + currentUserName);
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
