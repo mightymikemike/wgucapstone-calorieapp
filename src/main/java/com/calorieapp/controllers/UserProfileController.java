@@ -154,8 +154,19 @@ public class UserProfileController {
 
     @FXML
     public void handleOpenProgress() {
-        // Placeholder
-        System.out.println("Progress Indicator Clicked - Screen Unavailable");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/progress.fxml"));
+            Parent root = loader.load();
+            ProgressController controller = loader.getController();
+            controller.setCurrentUserName(currentUserName);
+
+            Stage stage = (Stage) changeUserButton.getScene().getWindow();
+            stage.setTitle("Calorie App - " + currentUserName);
+            stage.setScene(new Scene(root, 800, 600));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void navigateTo(String fxmlPath, String title, int width, int height) {

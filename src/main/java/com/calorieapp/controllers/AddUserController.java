@@ -87,6 +87,16 @@ public class AddUserController {
             // Convert height to inches
             int totalInches = (feet * 12) + inches;
 
+            // Verify goal and starting weight are valid
+            if (goalBox.getValue().contains("Lose") && goalWeight >= weight) {
+                errorLabel.setText("Goal weight must be less than current weight for a goal of weight loss");
+                return;
+            }
+            if (goalBox.getValue().contains("Gain") && goalWeight <= weight) {
+                errorLabel.setText("Goal weight must be more than current weight for a goal of weight gain");
+                return;
+            }
+
             DatabaseManager.addUser(
                     nameField.getText(),
                     genderBox.getValue(),

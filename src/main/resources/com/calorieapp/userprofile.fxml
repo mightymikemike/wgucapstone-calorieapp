@@ -36,7 +36,6 @@
                       prefWidth="200" prefHeight="150"
                       onMouseClicked="#handleOpenGraph">
                     <Label text="Weight Graph" style="-fx-font-weight: bold;"/>
-                    <Label text="(preview)" style="-fx-text-fill: gray;"/>
                 </VBox>
 
                 <VBox fx:id="streakPreview" alignment="CENTER" spacing="10"
@@ -44,7 +43,6 @@
                       prefWidth="200" prefHeight="150"
                       onMouseClicked="#handleOpenStreak">
                     <Label text="Streak Calendar" style="-fx-font-weight: bold;"/>
-                    <Label text="(preview)" style="-fx-text-fill: gray;"/>
                 </VBox>
 
                 <VBox fx:id="progressPreview" alignment="CENTER" spacing="10"
@@ -52,7 +50,6 @@
                       prefWidth="200" prefHeight="150"
                       onMouseClicked="#handleOpenProgress">
                     <Label text="Progress" style="-fx-font-weight: bold;"/>
-                    <Label text="(preview)" style="-fx-text-fill: gray;"/>
                 </VBox>
 
             </HBox>
