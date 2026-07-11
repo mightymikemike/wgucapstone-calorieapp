@@ -51,6 +51,17 @@ public class TDEECalculator {
             calories = tdee;
         }
 
+        // Debug
+        System.out.println("Weight lbs: " + weightLbs);
+        System.out.println("Weight kg: " + weightKg);
+        System.out.println("Height cm: " + heightCm);
+        System.out.println("Age: " + age);
+        System.out.println("BMR: " + bmr);
+        System.out.println("Multiplier: " + multiplier);
+        System.out.println("TDEE: " + tdee);
+        System.out.println("Weekly rate: " + weeklyRate);
+        System.out.println("Calories: " + calories);
+
         return calories;
     }
 }

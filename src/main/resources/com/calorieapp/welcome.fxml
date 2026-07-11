@@ -18,6 +18,6 @@
     <!-- This list will be populated with users from the database -->
     <ListView fx:id="userListView" prefWidth="300" prefHeight="200" onMouseClicked="#handleUserSelect"/>
 
-    <Button text="Add User" fx:id="addUserButton" onAction="#handleAddUser"/>
+    <Button text="Add Client" fx:id="addUserButton" onAction="#handleAddUser"/>
 
 </VBox>

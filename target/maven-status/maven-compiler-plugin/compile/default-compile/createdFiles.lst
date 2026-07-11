@@ -1,4 +1,5 @@
 com\calorieapp\controllers\ProgressController.class
+com\calorieapp\database\DatabaseManager.class
 com\calorieapp\controllers\StreakController.class
 com\calorieapp\controllers\WelcomeController.class
 com\calorieapp\models\UserProfile.class

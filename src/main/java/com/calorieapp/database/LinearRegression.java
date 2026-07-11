@@ -4,6 +4,10 @@ import com.calorieapp.models.WeightLog;
 
 import java.util.List;
 
+// Linear Regression implementation adapted from:
+// CodingTechRoom. (n.d.). Implementing linear regression in Java.
+// https://codingtechroom.com/tutorial/java-implementing-linear-regression-java
+
 public class LinearRegression {
     private double m; // Slope = rate of weight change per day
     private double b; // Intercept = starting point of line
@@ -44,6 +48,11 @@ public class LinearRegression {
 
     // Adjust recommendation based on current recommendation + users goal
     public double adjustCalories(double currentCalories, double weeklyRateGoal, String goalType) {
+
+        // doesn't adjust if less than 2 weight logs
+        if (m == 0) {
+            return currentCalories;
+        }
 
         // m = lbs/day, multiplies by 7 to get lbs/week
         double actualWeeklyRate = m * 7;
@@ -92,6 +101,10 @@ public class LinearRegression {
         // Min calories
         if (adjustedCalories < 1200) {
             adjustedCalories = 1200;
+        }
+
+        if (adjustedCalories > 5000) {
+            adjustedCalories = 5000;
         }
 
         return adjustedCalories;

@@ -58,7 +58,7 @@ public class UserProfileController {
 
     @FXML
     public void updateLabels() {
-        titleLabel.setText(currentUserName + "'s User Profile");
+        titleLabel.setText(currentUserName + "'s Client Profile");
 
         if (currentWeight == -1) {
             weightLabel.setText("Current Weight: No weight has been logged yet");

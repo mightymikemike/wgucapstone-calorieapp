@@ -36,7 +36,7 @@ public class WelcomeController {
         );
 
         Scene scene = new Scene(root, 800, 600);
-        stage.setTitle("Add New User");
+        stage.setTitle("Add New Client");
         stage.setScene(scene);
         stage.show();
     }

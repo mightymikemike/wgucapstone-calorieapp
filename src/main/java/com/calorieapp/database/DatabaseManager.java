@@ -121,7 +121,6 @@ public class DatabaseManager {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return -1;
     }
 
@@ -142,8 +141,6 @@ public class DatabaseManager {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
-
         return -1;
     }
 
