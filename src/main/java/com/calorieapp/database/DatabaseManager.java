@@ -2,8 +2,6 @@ package com.calorieapp.database;
 
 import com.calorieapp.models.UserProfile;
 import com.calorieapp.models.WeightLog;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -40,19 +38,6 @@ public class DatabaseManager {
             System.out.println("Users Table Created.");
             stmt.execute(createWeightLogs);
             System.out.println("Weight Log Table created");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    // DELETE AFTER TESTING
-    private static void connect() {
-        String url = "jdbc:sqlite:calorieapp.db";
-
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                System.out.println("Connected to the database");
-            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -294,28 +279,6 @@ public class DatabaseManager {
             System.out.println(e.getMessage());
         }
     }
-
-    /*
-    // Find first day logged to emit previous dates from streak calendar
-    public static String getFirstLoggedDate(int userId) {
-        String DB_URL = "jdbc:sqlite:calorieapp.db";
-        String sql = "SELECT MIN(log_date) as first_date FROM weight_logs WHERE user_id = ?";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                return rs.getString("first_date");
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-     */
 
     public static List<String> getLoggedDatesForMonth(int userId, int year, int month) {
         List<String> dates = new ArrayList<>();

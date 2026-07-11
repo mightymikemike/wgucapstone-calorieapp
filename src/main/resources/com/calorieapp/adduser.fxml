@@ -13,7 +13,7 @@
       fx:controller="com.calorieapp.controllers.AddUserController"
       style="-fx-padding: 30px;">
 
-    <Label text="Add New User" style="-fx-font-size: 30px;"/>
+    <Label text="Add New Client" style="-fx-font-size: 30px;"/>
 
     <!-- User Name -->
     <HBox spacing="10" alignment="CENTER">

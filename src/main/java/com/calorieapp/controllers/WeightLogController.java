@@ -29,7 +29,7 @@ public class WeightLogController {
     private String currentUserName = "User";
     private int currentUserId;
     private double currentWeight;
-    private int recommendedCalories = 2500; // Still a placeholder
+    private int recommendedCalories = 2500;
 
     @FXML
     public void initialize() {
@@ -116,19 +116,5 @@ public class WeightLogController {
         DatabaseManager.deleteWeightLog(currentUserId, selected.getDate());
         loadWeightLogs(); // Refresh list after delete
     }
-
-    private void navigateTo(String fxmlPath, String title, int width, int height) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
-            Stage stage = (Stage) returnToProfileButton.getScene().getWindow();
-            stage.setTitle(title);
-            stage.setScene(new Scene(root, width, height));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Add refresh button since youhave to back out to user profile before weight populates on weight log screen
 
 }

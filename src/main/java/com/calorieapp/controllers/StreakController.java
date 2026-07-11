@@ -50,7 +50,7 @@ public class StreakController {
 
         // Headers for day of week
         int i;
-        String[] dayHeaders = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+        String[] dayHeaders = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
         for (i = 0; i < 7; i++) {
             Label header = new Label(dayHeaders[i]);
             header.setStyle("-fx-font-weight: bold; -fx-min-width: 45px; -fx-alignment: CENTER;");

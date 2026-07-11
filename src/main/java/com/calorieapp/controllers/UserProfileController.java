@@ -75,16 +75,6 @@ public class UserProfileController {
     }
 
     @FXML
-    public void handleEditUser() {
-    //REVISIT
-    }
-
-    @FXML
-    public void handleDeleteUser() {
-    //REVISIT
-    }
-
-    @FXML
     public void handleViewLogs() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/calorieapp/weightlog.fxml"));

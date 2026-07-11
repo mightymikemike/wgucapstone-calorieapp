@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -75,11 +74,6 @@ public class ProgressController {
         } else {
             progress = 1.0;
         }
-
-        /*
-        double totalChange = Math.abs(startingWeight - goalWeight);
-        progress = totalChange > 0 ? Math.abs(startingWeight - currentWeight) / totalChange : 0;
-         */
 
         // Prevent going over 100% if user goes over goal
         progress = Math.min(1.0, Math.max(0.0, progress));

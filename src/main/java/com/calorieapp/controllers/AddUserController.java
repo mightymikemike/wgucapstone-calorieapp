@@ -3,7 +3,6 @@ package com.calorieapp.controllers;
 import com.calorieapp.database.DatabaseManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.xml.crypto.Data;
 import java.time.Year;
 
 public class AddUserController {
